@@ -13,6 +13,8 @@ public class MyStepdefs {
     private int value2;
     private int result;
 
+    private char opt;
+
     @Before
     public void before() {
         calculator = new Calculator();
@@ -33,5 +35,18 @@ public class MyStepdefs {
     @Then("^I expect the result (\\d+)$")
     public void iExpectTheResult(int arg0) {
         Assert.assertEquals(arg0, result);
+    }
+
+    @Given("^Two input values, ([+-]?\\d+) and ([+-]?\\d+), and operation ([*^/])$")
+    public void twoInputValuesAndOperation(int arg0, int arg1, char arg2) {
+        value1 = arg0;
+        value2 = arg1;
+        opt = arg2;
+    }
+
+    @When("^I do the operation on the two values$")
+    public void iDoTheOperationOnTheTwoValues() {
+        result = calculator.calculate(value1, value2, opt);
+        System.out.println(result);
     }
 }
